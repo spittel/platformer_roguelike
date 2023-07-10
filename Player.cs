@@ -55,7 +55,7 @@ public partial class Player : CharacterBody2D
 			_animatedSprite.Stop();
 		}
 
-		 Fire();
+		Fire();
 
 		ApplyMovement(velocity, delta);
 	}
@@ -75,7 +75,8 @@ public partial class Player : CharacterBody2D
 			{
 				bullet.SetDirection(bullet.LEFT);
 			}
-			AddChild(bullet);
+			bullet.Transform = GlobalTransform;  
+			Owner.AddChild(bullet);
 		}
 	}
 

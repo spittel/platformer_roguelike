@@ -3,6 +3,8 @@ using System;
 
 public partial class bullet : Node2D
 {
+	int MAX_X_DISTANCE = 1200;
+	int MAX_Y_DISTANCE = 1000;
 	public static String RIGHT = "Right";
 	public static String LEFT = "Left";
 	String _dir = RIGHT;
@@ -36,6 +38,10 @@ public partial class bullet : Node2D
 			_animatedBulletSprite.FlipH = true;
 		}
 		Position += velocity * (float)delta;
+
+		if(Math.Abs(Position.X) > MAX_X_DISTANCE || Math.Abs(Position.Y) > MAX_Y_DISTANCE){
+			QueueFree();
+		}
 	}
 
 
