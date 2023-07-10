@@ -9,7 +9,9 @@ public partial class Player : CharacterBody2D
 	private const float Gravity = 12000.0f;
 	int HORIZ_MOVEMENT = 100;
 	int VERT_MOVEMENT = 1000;
+	bool _isRight = true;
 
+	private PackedScene _bulletScene = (PackedScene)GD.Load("res://bullet.tscn");
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -36,6 +38,7 @@ public partial class Player : CharacterBody2D
 		if (Input.IsActionPressed("right"))
 		{
 			velocity.X += HORIZ_MOVEMENT;
+			_isRight = true;
 			_animatedSprite.FlipH = true;
 			_animatedSprite.Play("walking");
 
@@ -43,6 +46,7 @@ public partial class Player : CharacterBody2D
 		else if (Input.IsActionPressed("left"))
 		{
 			velocity.X -= HORIZ_MOVEMENT;
+			_isRight = false;
 			_animatedSprite.FlipH = false;
 			_animatedSprite.Play("walking");
 		}
@@ -51,10 +55,31 @@ public partial class Player : CharacterBody2D
 			_animatedSprite.Stop();
 		}
 
-		ApplyGravity(velocity, delta);
+		 Fire();
+
+		ApplyMovement(velocity, delta);
 	}
 
-	private void ApplyGravity(Vector2 velocity, double delta)
+	private void Fire()
+	{
+
+		if (Input.IsActionPressed("fire"))
+		{
+			GD.Print("fire");
+			bullet bullet = (bullet)_bulletScene.Instantiate();
+			if (_isRight)
+			{
+				bullet.SetDirection(bullet.RIGHT);
+			}
+			if (!_isRight)
+			{
+				bullet.SetDirection(bullet.LEFT);
+			}
+			AddChild(bullet);
+		}
+	}
+
+	private void ApplyMovement(Vector2 velocity, double delta)
 	{
 		velocity.Y += (float)delta * Gravity;
 		// translate new vector to this player's movement
