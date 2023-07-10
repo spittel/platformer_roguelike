@@ -1,7 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://cop0ihlrcjy6q"]
+[gd_scene load_steps=14 format=3 uid="uid://cop0ihlrcjy6q"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_yssxt"]
 [ext_resource type="Texture2D" uid="uid://dgs1w4eetpx5h" path="res://animations/man.png" id="2_3q4kd"]
+[ext_resource type="Texture2D" uid="uid://x40xpj7ocm0c" path="res://animations/failed_magical_experiment.png" id="2_bri3r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oenli"]
+atlas = ExtResource("2_bri3r")
+region = Rect2(0, 0, 405, 358)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcm7j"]
+atlas = ExtResource("2_bri3r")
+region = Rect2(405, 0, 405, 358)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k78cg"]
+atlas = ExtResource("2_bri3r")
+region = Rect2(810, 0, 405, 358)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aw6vv"]
+atlas = ExtResource("2_bri3r")
+region = Rect2(1215, 0, 405, 358)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_soarp"]
 atlas = ExtResource("2_3q4kd")
@@ -23,6 +40,23 @@ region = Rect2(192, 0, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_oenli")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcm7j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k78cg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aw6vv")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_soarp")
 }, {
 "duration": 1.0,
@@ -35,13 +69,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_f4m6m")
 }],
 "loop": true,
-"name": &"walking",
+"name": &"walking_old",
 "speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a4tv7"]
-radius = 39.0
-height = 92.0
+radius = 46.0
+height = 94.0
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(104, 479)
@@ -49,6 +83,7 @@ script = ExtResource("1_yssxt")
 
 [node name="player_animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(56, 59)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_kecvm")
 animation = &"walking"
 

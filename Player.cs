@@ -4,7 +4,7 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	private AnimatedSprite2D _animatedSprite;
-	int SCREEN_HORIZ = 500;
+	int SCREEN_HORIZ = 1000;
 	int SCREEN_VERT = 500;
 	private const float Gravity = 12000.0f;
 	int HORIZ_MOVEMENT = 100;
@@ -36,14 +36,14 @@ public partial class Player : CharacterBody2D
 		if (Input.IsActionPressed("right"))
 		{
 			velocity.X += HORIZ_MOVEMENT;
-			_animatedSprite.FlipH = false;
+			_animatedSprite.FlipH = true;
 			_animatedSprite.Play("walking");
 
 		}
 		else if (Input.IsActionPressed("left"))
 		{
 			velocity.X -= HORIZ_MOVEMENT;
-			_animatedSprite.FlipH = true;
+			_animatedSprite.FlipH = false;
 			_animatedSprite.Play("walking");
 		}
 		else
