@@ -6,6 +6,9 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D _animatedSprite;
 	int SCREEN_HORIZ = 500;
 	int SCREEN_VERT = 500;
+	private const float Gravity = 12000.0f;
+	int HORIZ_MOVEMENT = 100;
+	int VERT_MOVEMENT = 1000;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,8 +25,9 @@ public partial class Player : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		int HORIZ_MOVEMENT = 100;
-		int VERT_MOVEMENT = 1000;
+		// GD.Print("processing on player side");
+
+
 
 		var velocity = Vector2.Zero; // The player's movement vector.
 
@@ -55,6 +59,7 @@ public partial class Player : CharacterBody2D
 
 	private void ApplyGravity(Vector2 velocity, double delta)
 	{
+		velocity.Y += (float)delta * Gravity;
 		// translate new vector to this player's movement
 		Position += velocity * (float)delta;
 		Position = new Vector2(
