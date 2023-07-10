@@ -26,9 +26,6 @@ public partial class Player : CharacterBody2D
 	public override void _Process(double delta)
 	{
 		// GD.Print("processing on player side");
-
-
-
 		var velocity = Vector2.Zero; // The player's movement vector.
 
 		if (Input.IsActionPressed("jump"))
