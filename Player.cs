@@ -11,6 +11,9 @@ public partial class Player : CharacterBody2D
 	int VERT_MOVEMENT = 1000;
 	bool _isRight = true;
 
+	static double FIRE_WAIT = .5;
+	double _lastFire = FIRE_WAIT + .0001;
+
 	private PackedScene _bulletScene = (PackedScene)GD.Load("res://bullet.tscn");
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -20,7 +23,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{;		
-		Fire();
+		Fire(delta);
 		// Move down 1 pixel per physics frame
 		MoveAndCollide(new Vector2(0, 1));
 	}
@@ -56,13 +59,17 @@ public partial class Player : CharacterBody2D
 			_animatedSprite.Stop();
 		}
 
-
-
 		ApplyMovement(velocity, delta);
 	}
 
-	private void Fire()
+	private void Fire(double delta)
 	{
+		_lastFire += delta;
+
+		// limit firing rate
+		if(_lastFire < FIRE_WAIT){
+			return;
+		}
 
 		if (Input.IsActionPressed("fire"))
 		{
@@ -77,6 +84,7 @@ public partial class Player : CharacterBody2D
 			}
 			bullet.Transform = GlobalTransform;  
 			Owner.AddChild(bullet);
+			_lastFire = 0;
 		}
 	}
 
