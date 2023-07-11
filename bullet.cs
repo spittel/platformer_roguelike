@@ -44,6 +44,16 @@ public partial class bullet : Node2D
 		}
 	}
 
-
+private void _on_area_2d_area_shape_entered(Rid area_rid, Area2D area, long area_shape_index, long local_shape_index)
+{
+	// remove bullet when it hits something
+	QueueFree();
+}
 
 }
+
+
+
+
+
+

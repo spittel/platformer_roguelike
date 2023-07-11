@@ -19,7 +19,8 @@ public partial class Player : CharacterBody2D
 	}
 
 	public override void _PhysicsProcess(double delta)
-	{
+	{;		
+		Fire();
 		// Move down 1 pixel per physics frame
 		MoveAndCollide(new Vector2(0, 1));
 	}
@@ -39,7 +40,7 @@ public partial class Player : CharacterBody2D
 		{
 			velocity.X += HORIZ_MOVEMENT;
 			_isRight = true;
-			_animatedSprite.FlipH = true;
+			_animatedSprite.FlipH = false;
 			_animatedSprite.Play("walking");
 
 		}
@@ -47,7 +48,7 @@ public partial class Player : CharacterBody2D
 		{
 			velocity.X -= HORIZ_MOVEMENT;
 			_isRight = false;
-			_animatedSprite.FlipH = false;
+			_animatedSprite.FlipH = true;
 			_animatedSprite.Play("walking");
 		}
 		else
@@ -55,7 +56,7 @@ public partial class Player : CharacterBody2D
 			_animatedSprite.Stop();
 		}
 
-		Fire();
+
 
 		ApplyMovement(velocity, delta);
 	}
@@ -65,7 +66,6 @@ public partial class Player : CharacterBody2D
 
 		if (Input.IsActionPressed("fire"))
 		{
-			GD.Print("fire");
 			bullet bullet = (bullet)_bulletScene.Instantiate();
 			if (_isRight)
 			{

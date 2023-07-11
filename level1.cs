@@ -7,7 +7,7 @@ public partial class level1 : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			Random rnd = new Random();
 			int RanX = rnd.Next(0, 1000);

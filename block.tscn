@@ -1,13 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvh3d8c3yjc84"]
+[gd_scene load_steps=5 format=3 uid="uid://cvh3d8c3yjc84"]
 
 [ext_resource type="Texture2D" uid="uid://ljbbhjrjnr14" path="res://animations/block.png" id="1_afuwk"]
+[ext_resource type="Script" path="res://Block2D.cs" id="2_5ywgb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rfmqm"]
 size = Vector2(64, 64)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3s5o3"]
+size = Vector2(64, 65)
+
 [node name="block" type="Node2D"]
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 texture = ExtResource("1_afuwk")
@@ -15,3 +21,12 @@ texture = ExtResource("1_afuwk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_rfmqm")
+
+[node name="Block2D" type="Area2D" parent="AnimatableBody2D"]
+script = ExtResource("2_5ywgb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Block2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_3s5o3")
+
+[connection signal="body_entered" from="AnimatableBody2D/Block2D" to="AnimatableBody2D/Block2D" method="_on_body_entered"]

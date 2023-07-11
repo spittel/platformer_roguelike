@@ -48,19 +48,28 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hh2aj"]
-size = Vector2(88.5, 35.5)
+size = Vector2(25, 13)
 
-[node name="Bullet" type="Node2D"]
+[node name="Bullet" type="Node2D" groups=["bullets"]]
+position = Vector2(58, 1)
 script = ExtResource("1_23wgv")
 
-[node name="animated_bullet" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
+[node name="animated_bullet" type="AnimatedSprite2D" parent="." groups=["bullets"]]
+scale = Vector2(0.25, 0.182143)
 sprite_frames = SubResource("SpriteFrames_gte5d")
 animation = &"fire"
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+[node name="Area2D" type="Area2D" parent="animated_bullet" groups=["bullets"]]
 
-[node name="BulletCollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(-3.25, -8.75)
+[node name="BulletCollisionShape2D" type="CollisionShape2D" parent="animated_bullet/Area2D" groups=["bullets"]]
+position = Vector2(-2, -8.23529)
+scale = Vector2(4, 5.4902)
 shape = SubResource("RectangleShape2D_hh2aj")
 script = ExtResource("3_a53u6")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." groups=["bullets"]]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[connection signal="area_shape_entered" from="animated_bullet/Area2D" to="." method="_on_area_2d_area_shape_entered"]
