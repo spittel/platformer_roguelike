@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://qlk45ol5u7ro"]
+[gd_scene load_steps=10 format=3 uid="uid://qlk45ol5u7ro"]
 
 [ext_resource type="Script" path="res://bullet.cs" id="1_23wgv"]
 [ext_resource type="Texture2D" uid="uid://clv45qd554oqn" path="res://animations/bullet.png" id="1_bnkgr"]
-[ext_resource type="Script" path="res://BulletCollisionShape2D.cs" id="3_a53u6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rngv6"]
 atlas = ExtResource("1_bnkgr")
@@ -65,11 +64,5 @@ animation = &"fire"
 position = Vector2(-2, -8.23529)
 scale = Vector2(4, 5.4902)
 shape = SubResource("RectangleShape2D_hh2aj")
-script = ExtResource("3_a53u6")
-
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-visible = false
-collision_layer = 2
-collision_mask = 2
 
 [connection signal="area_shape_entered" from="animated_bullet/Area2D" to="." method="_on_area_2d_area_shape_entered"]
