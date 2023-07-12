@@ -17,9 +17,6 @@ public partial class Camera2D : Godot.Camera2D
 
 		Player p = (Player)GetNode("../Player");
 
-		CameraPosition.Y = p.Position.Y;
-		CameraPosition.X = MID_WAY;
-
-		Position = CameraPosition;
+		Position = p.Position;
 	}
 }
