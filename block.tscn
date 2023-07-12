@@ -1,6 +1,5 @@
 [gd_scene load_steps=9 format=3 uid="uid://cvh3d8c3yjc84"]
 
-[ext_resource type="Texture2D" uid="uid://ljbbhjrjnr14" path="res://animations/block.png" id="1_afuwk"]
 [ext_resource type="Texture2D" uid="uid://cgl87uvd7btl6" path="res://animations/IMG_0134.png" id="1_qr1kp"]
 [ext_resource type="Script" path="res://hover_platform.cs" id="2_wjnep"]
 
@@ -37,6 +36,10 @@ animations = [{
 radius = 7.0
 height = 54.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6x2og"]
+radius = 7.0
+height = 54.0
+
 [node name="block" type="Node2D"]
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
@@ -49,11 +52,14 @@ sprite_frames = SubResource("SpriteFrames_0udru")
 animation = &"hover"
 script = ExtResource("2_wjnep")
 
-[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
-visible = false
-texture = ExtResource("1_afuwk")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
 position = Vector2(0, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4vdwf")
+
+[node name="BlocksBullets" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlocksBullets"]
+position = Vector2(0, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6x2og")
