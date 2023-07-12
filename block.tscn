@@ -1,13 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvh3d8c3yjc84"]
+[gd_scene load_steps=9 format=3 uid="uid://cvh3d8c3yjc84"]
 
 [ext_resource type="Texture2D" uid="uid://ljbbhjrjnr14" path="res://animations/block.png" id="1_afuwk"]
-[ext_resource type="Script" path="res://Block2D.cs" id="2_5ywgb"]
+[ext_resource type="Texture2D" uid="uid://cgl87uvd7btl6" path="res://animations/IMG_0134.png" id="1_qr1kp"]
+[ext_resource type="Script" path="res://hover_platform.cs" id="2_wjnep"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfmqm"]
-size = Vector2(64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqu05"]
+atlas = ExtResource("1_qr1kp")
+region = Rect2(0, 0, 1280, 1280)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3s5o3"]
-size = Vector2(64, 65)
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3fof"]
+atlas = ExtResource("1_qr1kp")
+region = Rect2(1280, 0, 1280, 1280)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg1kn"]
+atlas = ExtResource("1_qr1kp")
+region = Rect2(2560, 0, 1280, 1280)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0udru"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqu05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3fof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg1kn")
+}],
+"loop": true,
+"name": &"hover",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4vdwf"]
+radius = 7.0
+height = 54.0
 
 [node name="block" type="Node2D"]
 
@@ -15,16 +43,17 @@ size = Vector2(64, 65)
 collision_layer = 3
 collision_mask = 3
 
+[node name="hover_platform" type="AnimatedSprite2D" parent="AnimatableBody2D"]
+scale = Vector2(0.05, 0.05)
+sprite_frames = SubResource("SpriteFrames_0udru")
+animation = &"hover"
+script = ExtResource("2_wjnep")
+
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+visible = false
 texture = ExtResource("1_afuwk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_rfmqm")
-
-[node name="Block2D" type="Area2D" parent="AnimatableBody2D"]
-script = ExtResource("2_5ywgb")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Block2D"]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_3s5o3")
+position = Vector2(0, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4vdwf")
