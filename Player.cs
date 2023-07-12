@@ -6,12 +6,12 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D _animatedSprite;
 	int SCREEN_HORIZ = 1000;
 	int SCREEN_VERT = 500;
-	private const float Gravity = 12000.0f;
+	private const float GRAVITY = 1000.0f;
 	int HORIZ_MOVEMENT = 100;
 	int VERT_MOVEMENT = 1000;
 	bool _isRight = true;
 
-	static double FIRE_WAIT = .5;
+	static double FIRE_WAIT = .1;
 	double _lastFire = FIRE_WAIT + .0001;
 
 	private PackedScene _bulletScene = (PackedScene)GD.Load("res://bullet.tscn");
@@ -22,7 +22,7 @@ public partial class Player : CharacterBody2D
 	}
 
 	public override void _PhysicsProcess(double delta)
-	{;		
+	{		
 		Fire(delta);
 		// Move down 1 pixel per physics frame
 		MoveAndCollide(new Vector2(0, 1));
@@ -90,7 +90,7 @@ public partial class Player : CharacterBody2D
 
 	private void ApplyMovement(Vector2 velocity, double delta)
 	{
-		velocity.Y += (float)delta * Gravity;
+		velocity.Y += (float)delta * GRAVITY;
 		// translate new vector to this player's movement
 		Position += velocity * (float)delta;
 		Position = new Vector2(

@@ -28,5 +28,3 @@ script = ExtResource("2_5ywgb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Block2D"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_3s5o3")
-
-[connection signal="body_entered" from="AnimatableBody2D/Block2D" to="AnimatableBody2D/Block2D" method="_on_body_entered"]

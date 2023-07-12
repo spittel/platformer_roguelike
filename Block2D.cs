@@ -12,16 +12,6 @@ public partial class Block2D : Area2D
 	public override void _Process(double delta)
 	{
 	}
-
-	private void _on_body_entered(Node2D body)
-	{ 
-		GD.Print("block hit, but by what");
-		if (body.IsInGroup("bullets"))
-		{
-			GD.Print("hit by bullet");
-
-		}
-	}
 }
 
 
