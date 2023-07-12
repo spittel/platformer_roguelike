@@ -4,7 +4,7 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	private AnimatedSprite2D _animatedSprite;
-	private const float GRAVITY = 9000.0f;
+	private const float GRAVITY = 10000.0f;
 	int HORIZ_MOVEMENT = 100;
 	int JUMP_MOVEMENT = 1000;
 	bool _isRight = true;
@@ -28,13 +28,6 @@ public partial class Player : CharacterBody2D
 		Fire(delta);
 		_collisionInfo = MoveAndCollide(new Vector2(0, 0));
 
-		if (_collisionInfo == null)
-			GD.Print(_collisionInfo);
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 		var velocity = Vector2.Zero; // The player's movement vector.
 
 		velocity = Jump(delta, velocity);
@@ -60,6 +53,12 @@ public partial class Player : CharacterBody2D
 		}
 
 		ApplyMovement(velocity, delta);
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+
 	}
 
 	private Vector2 Jump(double delta, Vector2 velocity)
