@@ -11,14 +11,8 @@ public partial class Camera2D : Godot.Camera2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Vector2 PlayerPosition = Vector2.Zero;
-		PlayerPosition.X = 100;
-		PlayerPosition.Y = 400;
+		Player p  = (Player)GetNode("../Player");
 
-
-		// Vector2 PlayerPosition1 = GetNode("../Player").Position;
-		// String BaseName = $"../Player".GetBaseName();
-
-		Position = PlayerPosition;
+		Position = p.Position;
 	}
 }
