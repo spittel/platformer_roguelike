@@ -43,7 +43,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"fire",
-"speed": 16.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hh2aj"]

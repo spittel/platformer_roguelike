@@ -24,8 +24,8 @@ public partial class level1 : Node2D
 		int TotalRows = (int)(int)GetViewportRect().Size.Y / BLOCK_HEIGHT;
 		int TotalCols = (int)(int)GetViewportRect().Size.X / BLOCK_WIDTH;
 
-		GD.Print(TotalCols);
-		GD.Print(TotalRows);
+		// GD.Print(TotalCols);
+		// GD.Print(TotalRows);
 
 		for (int r = 0; r < TotalRows; r++)
 		{
@@ -41,7 +41,6 @@ public partial class level1 : Node2D
 					if (PercentShouldMake > 80)
 					{
 						int FiftyFifty = rnd.Next(0, 10);
-						GD.Print(FiftyFifty);
 						
 						if (FiftyFifty >= 5)
 						{

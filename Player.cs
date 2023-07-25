@@ -3,19 +3,22 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+
+	public const float Speed = 300.0f;
+	public const float JumpVelocity = -400.0f;
+
 	private AnimatedSprite2D _animatedSprite;
-	private const float GRAVITY = 10000.0f;
-	int HORIZ_MOVEMENT = 100;
-	int JUMP_MOVEMENT = 1000;
 	bool _isRight = true;
 
 	static double FIRE_WAIT = .1;
 	double _lastFire = FIRE_WAIT + .0001;
-	static int JUMP_NUM = 10;
-	int _currentJump = 0;
 
 	private PackedScene _bulletScene = (PackedScene)GD.Load("res://bullet.tscn");
 	private KinematicCollision2D _collisionInfo;
+
+
+	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -26,15 +29,46 @@ public partial class Player : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		Fire(delta);
-		_collisionInfo = MoveAndCollide(new Vector2(0, 0));
 
-		var velocity = Vector2.Zero; // The player's movement vector.
+		// _collisionInfo = MoveAndCollide(new Vector2(0, 0));
 
-		velocity = Jump(delta, velocity);
+		HandleAnimation();
 
+		HandleMovement(delta);
+	}
+
+	private void HandleMovement(double delta)
+	{
+		Vector2 velocity = Velocity;
+
+		// Add the gravity.
+		if (!IsOnFloor())
+			velocity.Y += gravity * (float)delta;
+
+		// Handle Jump.
+		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+			velocity.Y = JumpVelocity;
+
+		// Get the input direction and handle the movement/deceleration.
+		// As good practice, you should replace UI actions with custom gameplay actions.
+		Vector2 direction = Input.GetVector("left", "right", "jump", "ui_down");
+		if (direction != Vector2.Zero)
+		{
+			velocity.X = direction.X * Speed;
+		}
+		else
+		{
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+		}
+
+		Velocity = velocity;
+		MoveAndSlide();
+	}
+
+	private void HandleAnimation()
+	{
 		if (Input.IsActionPressed("right"))
 		{
-			velocity.X += HORIZ_MOVEMENT;
 			_isRight = true;
 			_animatedSprite.FlipH = false;
 			_animatedSprite.Play("walking");
@@ -42,7 +76,6 @@ public partial class Player : CharacterBody2D
 		}
 		else if (Input.IsActionPressed("left"))
 		{
-			velocity.X -= HORIZ_MOVEMENT;
 			_isRight = false;
 			_animatedSprite.FlipH = true;
 			_animatedSprite.Play("walking");
@@ -51,8 +84,6 @@ public partial class Player : CharacterBody2D
 		{
 			_animatedSprite.Stop();
 		}
-
-		ApplyMovement(velocity, delta);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,27 +92,6 @@ public partial class Player : CharacterBody2D
 
 	}
 
-	private Vector2 Jump(double delta, Vector2 velocity)
-	{
-		if (Input.IsActionPressed("jump"))
-		{
-			if ( _currentJump < JUMP_NUM
-				|| _collisionInfo != null // on ground, or colliding with something
-				)
-			{
-				velocity.Y -= JUMP_MOVEMENT;
-				
-				_currentJump++;
-
-				// player can hold jump down and jump a little higher, to the equivalent of 
-				// JUMP_NUM
-				if (_currentJump > JUMP_NUM)
-					_currentJump = 0;
-			}
-		}
-
-		return velocity;
-	}
 
 	private void Fire(double delta)
 	{
@@ -110,14 +120,5 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	private void ApplyMovement(Vector2 velocity, double delta)
-	{
-		velocity.Y += (float)delta * GRAVITY;
-		// translate new vector to this player's movement
-		Position += velocity * (float)delta;
-		Position = new Vector2(
-			x: Mathf.Clamp(Position.X, 0, (int)GetViewportRect().Size.X),
-			y: Mathf.Clamp(Position.Y, 0, (int)GetViewportRect().Size.Y)
-		);
-	}
+
 }
