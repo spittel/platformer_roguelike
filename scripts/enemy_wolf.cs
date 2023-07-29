@@ -10,33 +10,30 @@ public partial class enemy_wolf : CharacterBody2D
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
 	private AnimatedSprite2D _animatedSprite;
+
+	RayCast2D wolfRayCast;
+
 	public override void _Ready()
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("enemy_wolf_animation");
+		wolfRayCast = GetNode<RayCast2D>("WolfRayCast");
 	}
 
 	public override void _Draw()
 	{
-	   
+
 	}
-	
+
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
 
-		var spaceState = GetWorld2D().DirectSpaceState;
-
-		var query = PhysicsRayQueryParameters2D.Create(Vector2.Zero, new Vector2(1200, 0));
-
-		query.Exclude = new Godot.Collections.Array<Rid>{GetRid()};
-		var result = spaceState.IntersectRay(query);
-
-		if (result.Count > 0)
+		if (wolfRayCast.IsColliding())
 		{
 			GD.Print("wolf found something!");
-			GD.Print(result);
+			GodotObject collided = wolfRayCast.GetCollider();
+			GD.Print(((Godot.Node)collided).Name);
 		}
-
 
 		// Add the gravity.
 		if (!IsOnFloor())
