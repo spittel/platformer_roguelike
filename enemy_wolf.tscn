@@ -83,7 +83,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"standing",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -112,7 +112,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walking",
-"speed": 10.0
+"speed": 20.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bep2i"]
@@ -134,11 +134,11 @@ scale = Vector2(25, 25)
 target_position = Vector2(-90, 0)
 
 [node name="DownRay1" type="RayCast2D" parent="enemy_wolf_animation"]
-position = Vector2(-700, -1)
+position = Vector2(-10, -1)
 scale = Vector2(25, 25)
 
 [node name="DownRay2" type="RayCast2D" parent="enemy_wolf_animation"]
-position = Vector2(700, -26)
+position = Vector2(10, -26)
 scale = Vector2(25, 25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

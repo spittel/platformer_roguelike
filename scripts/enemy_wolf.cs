@@ -3,7 +3,7 @@ using System;
 
 public partial class enemy_wolf : CharacterBody2D
 {
-	public const float Speed = 30.0f;
+	public const float Speed = 100.0f;
 	public const float JumpVelocity = -400.0f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
