@@ -4,6 +4,7 @@ using System;
 public partial class Player : CharacterBody2D
 {
 
+	public const String NAME = "Player"; // just a place to put this
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
 

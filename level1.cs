@@ -24,9 +24,6 @@ public partial class level1 : Node2D
 		int TotalRows = (int)(int)GetViewportRect().Size.Y / BLOCK_HEIGHT;
 		int TotalCols = (int)(int)GetViewportRect().Size.X / BLOCK_WIDTH;
 
-		// GD.Print(TotalCols);
-		// GD.Print(TotalRows);
-
 		for (int r = 0; r < TotalRows; r++)
 		{
 			if (r % 10 == 0)
@@ -38,7 +35,7 @@ public partial class level1 : Node2D
 					int BaselineRowPercent = (int)(((float)r / (float)TotalRows) * 100);
 					int PercentShouldMake = rnd.Next(BaselineRowPercent, 100);
 
-					if (PercentShouldMake > 80)
+					if (PercentShouldMake > 30)
 					{
 						int FiftyFifty = rnd.Next(0, 10);
 						
@@ -46,7 +43,7 @@ public partial class level1 : Node2D
 						{
 							Node2D block = (Node2D)_blockScene.Instantiate();
 							block.Position = new Vector2(x: c * BLOCK_WIDTH, y: r * BLOCK_HEIGHT);
-							GD.Print("Making a block at : " + block.Position);
+							// GD.Print("Making a block at : " + block.Position);
 							AddChild(block);
 						}
 					}
