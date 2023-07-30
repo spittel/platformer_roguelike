@@ -26,7 +26,7 @@ public partial class level1 : Node2D
 
 		for (int r = 0; r < TotalRows; r++)
 		{
-			if (r % 10 == 0)
+			if (r % 8 == 0)
 			{
 				for (int c = 0; c < TotalCols; c++)
 				{

@@ -16,5 +16,5 @@ script = ExtResource("2_1m7dx")
 position = Vector2(98, 601)
 
 [node name="enemy_wolf" parent="." instance=ExtResource("4_hgsxh")]
-position = Vector2(215, 541)
+position = Vector2(212, 495)
 scale = Vector2(0.05, 0.05)

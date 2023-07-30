@@ -129,8 +129,8 @@ sprite_frames = SubResource("SpriteFrames_kecvm")
 animation = &"standing"
 
 [node name="WolfRayCast" type="RayCast2D" parent="enemy_wolf_animation"]
-position = Vector2(5, -1)
-scale = Vector2(25, 25)
+position = Vector2(5, 0)
+scale = Vector2(25, 500)
 target_position = Vector2(-90, 0)
 
 [node name="DownRay1" type="RayCast2D" parent="enemy_wolf_animation"]
