@@ -121,6 +121,7 @@ height = 33.52
 
 [node name="enemy_wolf" type="CharacterBody2D"]
 position = Vector2(2, -4)
+scale = Vector2(0.05, 0.05)
 script = ExtResource("1_upj5b")
 
 [node name="enemy_wolf_animation" type="AnimatedSprite2D" parent="."]

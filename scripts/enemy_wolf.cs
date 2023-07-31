@@ -46,6 +46,15 @@ public partial class enemy_wolf : CharacterBody2D
 		direction = DecideDirection(direction);
 
 		// Add the gravity.
+		velocity = HandleInAir(delta, velocity);
+
+		Velocity = CalculateVelocity(velocity, direction);
+
+		MoveAndSlide();
+	}
+
+	private Vector2 HandleInAir(double delta, Vector2 velocity)
+	{
 		if (!IsOnFloor())
 		{
 			velocity.Y += GRAVITY * (float)delta;
@@ -56,11 +65,7 @@ public partial class enemy_wolf : CharacterBody2D
 			}
 		}
 
-
-
-		Velocity = CalculateVelocity(velocity, direction);
-
-		MoveAndSlide();
+		return velocity;
 	}
 
 	private void Pace()

@@ -3,6 +3,8 @@ using System;
 
 public partial class level1 : Node2D
 {
+	[Export]
+	public PackedScene WolfScene { get; set; }
 	static int BLOCK_WIDTH = 54;
 	static int BLOCK_HEIGHT = 10;
 	private PackedScene _blockScene = (PackedScene)GD.Load("res://block.tscn");
@@ -17,6 +19,20 @@ public partial class level1 : Node2D
 		MakeFloor();
 
 		ScatterBlocks();
+
+
+	}
+
+	private void SpawnEnemies(Vector2 position)
+	{
+		Boolean shouldSpawn = new Random().Next(0, 10) > 6;
+
+		if (shouldSpawn)
+		{
+			enemy_wolf wolf = WolfScene.Instantiate<enemy_wolf>();
+			wolf.Position = position;
+			AddChild(wolf);
+		}
 	}
 
 	private void ScatterBlocks()
@@ -38,12 +54,14 @@ public partial class level1 : Node2D
 					if (PercentShouldMake > 30)
 					{
 						int FiftyFifty = rnd.Next(0, 10);
-						
+
 						if (FiftyFifty >= 5)
 						{
 							Node2D block = (Node2D)_blockScene.Instantiate();
 							block.Position = new Vector2(x: c * BLOCK_WIDTH, y: r * BLOCK_HEIGHT);
-							// GD.Print("Making a block at : " + block.Position);
+
+							SpawnEnemies(position: block.Position);
+
 							AddChild(block);
 						}
 					}
