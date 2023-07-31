@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cop0ihlrcjy6q"]
+[gd_scene load_steps=14 format=3 uid="uid://cop0ihlrcjy6q"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_yssxt"]
 [ext_resource type="Texture2D" uid="uid://d0a5222phdp82" path="res://animations/PlayerRunning.png" id="2_rfb4s"]
@@ -69,6 +69,8 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bep2i"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dgyim"]
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(2, -4)
 script = ExtResource("1_yssxt")
@@ -81,3 +83,11 @@ animation = &"walking"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 4.5)
 shape = SubResource("CapsuleShape2D_bep2i")
+
+[node name="player_area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_area2D"]
+position = Vector2(-4, 4)
+shape = SubResource("CapsuleShape2D_dgyim")
+
+[connection signal="area_shape_entered" from="player_area2D" to="." method="_on_player_area_2d_area_shape_entered"]

@@ -3,8 +3,11 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-
 	public const String NAME = "Player"; // just a place to put this
+	public const String NAME_AREA2D = "player_area2D";
+	private const float FULL_HEALTH = 5;
+	private const float FULL_HEALTH_BAR = 30.0f;
+	private float _health = 5;
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
 
@@ -26,6 +29,19 @@ public partial class Player : CharacterBody2D
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("player_animation");
 	}
+	public override void _Draw()
+	{
+		DrawHealth();
+	}
+
+	private void DrawHealth()
+	{
+		float current_health_percentage = (_health / FULL_HEALTH);
+
+		float current_health_bar = FULL_HEALTH_BAR * current_health_percentage;
+
+		DrawRect(new Rect2(-17.0f, -20.0f, current_health_bar, 5.0f), Colors.Green);
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -36,6 +52,8 @@ public partial class Player : CharacterBody2D
 		HandleAnimation();
 
 		HandleMovement(delta);
+
+		QueueRedraw();
 	}
 
 	private void HandleMovement(double delta)
@@ -122,4 +140,18 @@ public partial class Player : CharacterBody2D
 	}
 
 
+	private void _on_player_area_2d_area_shape_entered(Rid area_rid, Area2D area, long area_shape_index, long local_shape_index)
+	{
+		if (area.Name.Equals(enemy_wolf.NAME_AREA2D))
+		{
+			_health -= 1;
+
+			if (_health == 0)
+			{
+				QueueFree();
+			}
+		}
+	}
 }
+
+

@@ -3,6 +3,7 @@ using System;
 
 public partial class enemy_wolf : CharacterBody2D
 {
+	public static String NAME_AREA2D = "enemy_wolf_area2d";
 	private const float FULL_HEALTH = 5;
 	private const float FULL_HEALTH_BAR = 500.0f;
 	private float _health = 5;
@@ -20,6 +21,8 @@ public partial class enemy_wolf : CharacterBody2D
 	RayCast2D _downRay2;
 
 	private Boolean _huntMode = false;
+	private bool _do_shake = false;
+	private double _shake_time = 0;
 
 	public override void _Ready()
 	{
@@ -41,34 +44,58 @@ public partial class enemy_wolf : CharacterBody2D
 
 		float current_health_bar = FULL_HEALTH_BAR * current_health_percentage;
 
-		DrawRect(new Rect2(-250.0f, -500.0f, current_health_bar, 100.0f), Colors.Green);
+		DrawRect(new Rect2(-250.0f, -500.0f, current_health_bar, 100.0f), Colors.Red);
 	}
 
 	public override void _PhysicsProcess(double delta)
-	{
-		Vector2 velocity = Velocity;
+    {
+        Vector2 velocity = Velocity;
 
-		Vector2 direction = Vector2.Right;
+        Vector2 direction = Vector2.Right;
 
-		CheckHuntMode();
+        Shake(delta);
 
-		AdjustSpeed();
+        CheckHuntMode();
 
-		Pace();
+        AdjustSpeed();
 
-		direction = DecideDirection(direction);
+        Pace();
 
-		// Add the gravity.
-		velocity = HandleInAir(delta, velocity);
+        direction = DecideDirection(direction);
 
-		Velocity = CalculateVelocity(velocity, direction);
+        velocity = HandleInAir(delta, velocity);
 
-		MoveAndSlide();
+        Velocity = CalculateVelocity(velocity, direction);
 
-		QueueRedraw();
-	}
+        MoveAndSlide();
 
-	private Vector2 HandleInAir(double delta, Vector2 velocity)
+        QueueRedraw();
+    }
+
+    private void Shake(double delta)
+    {
+        if (_do_shake)
+        {
+            _do_shake = false;
+            _shake_time = 0.5;
+        }
+
+        if (_shake_time != 0)
+        {
+            Boolean ranBoolean = new Random().Next(0, 100) > 50;
+            if (ranBoolean)
+                Position = new Vector2(Position.X - 2, Position.Y);
+            else
+                Position = new Vector2(Position.X + 2, Position.Y);
+
+            _shake_time -= delta;
+
+            if (_shake_time < 0)
+                _shake_time = 0;
+        }
+    }
+
+    private Vector2 HandleInAir(double delta, Vector2 velocity)
 	{
 		if (!IsOnFloor())
 		{
@@ -89,7 +116,6 @@ public partial class enemy_wolf : CharacterBody2D
 		 // hitting world wall
 		 _bumpCast.IsColliding())
 		{
-
 			if (!_huntMode)
 			{
 				_animatedSprite.FlipH = !_animatedSprite.FlipH;
@@ -119,13 +145,9 @@ public partial class enemy_wolf : CharacterBody2D
 	private void AdjustSpeed()
 	{
 		if (_huntMode)
-		{
 			this._speed = 100.0f;
-		}
 		else
-		{
 			this._speed = 40.0f;
-		}
 	}
 
 	private Vector2 DecideDirection(Vector2 direction)
@@ -154,15 +176,13 @@ public partial class enemy_wolf : CharacterBody2D
 		if (area.Name.Equals(bullet.NAME))
 		{
 			_health -= 1;
-
-			GD.Print("health is currently" + _health);
+			_do_shake = true;
 
 			if (_health == 0)
 			{
 				QueueFree();
 			}
 		}
-
 	}
 }
 
