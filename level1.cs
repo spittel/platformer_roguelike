@@ -25,7 +25,7 @@ public partial class level1 : Node2D
 
 	private void SpawnEnemies(Vector2 position)
 	{
-		Boolean shouldSpawn = new Random().Next(0, 10) > 6;
+		Boolean shouldSpawn = new Random().Next(0, 100) > 80;
 
 		if (shouldSpawn)
 		{
@@ -86,6 +86,7 @@ public partial class level1 : Node2D
 
 			i++;
 		}
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

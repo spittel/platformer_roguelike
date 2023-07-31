@@ -58,11 +58,12 @@ scale = Vector2(0.25, 0.182143)
 sprite_frames = SubResource("SpriteFrames_gte5d")
 animation = &"fire"
 
-[node name="Area2D" type="Area2D" parent="animated_bullet"]
+[node name="bullet_area_2d" type="Area2D" parent="animated_bullet"]
 
-[node name="BulletCollisionShape2D" type="CollisionShape2D" parent="animated_bullet/Area2D"]
+[node name="BulletCollisionShape2D" type="CollisionShape2D" parent="animated_bullet/bullet_area_2d"]
 position = Vector2(-2, -8.23529)
 scale = Vector2(4, 5.4902)
 shape = SubResource("RectangleShape2D_hh2aj")
 
-[connection signal="area_shape_entered" from="animated_bullet/Area2D" to="." method="_on_area_2d_area_shape_entered"]
+[connection signal="area_shape_entered" from="animated_bullet/bullet_area_2d" to="." method="_on_area_2d_area_shape_entered"]
+[connection signal="body_entered" from="animated_bullet/bullet_area_2d" to="." method="_on_area_2d_body_entered"]

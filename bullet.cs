@@ -3,6 +3,9 @@ using System;
 
 public partial class bullet : Node2D
 {
+	// area2D name, we just store it here so we have a mental connection to it
+	public static String NAME = "bullet_area_2d";
+
 	int MAX_X_DISTANCE = 1200;
 	int MAX_Y_DISTANCE = 1000;
 	public static String RIGHT = "Right";
@@ -50,8 +53,17 @@ public partial class bullet : Node2D
 		// remove bullet when it hits something
 		QueueFree();
 	}
+	private void _on_area_2d_body_entered(Node2D body)
+	{
+		if (!body.Name.Equals(Player.NAME))
+		{
+			QueueFree();
+		}
+	}
 
 }
+
+
 
 
 
