@@ -14,9 +14,8 @@ public partial class HUD : Control
 	}
 	public void ShowMessage(string text)
 	{
-		var message = GetNode<Label>("p1health");
+		var message = GetNode<Label>("Label");
 		message.Text = text;
 		message.Show();
-
 	}
 }

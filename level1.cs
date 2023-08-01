@@ -3,6 +3,7 @@ using System;
 
 public partial class level1 : Node2D
 {
+	HUD hud;
 	[Export]
 	public PackedScene WolfScene { get; set; }
 	static int BLOCK_WIDTH = 54;
@@ -11,6 +12,7 @@ public partial class level1 : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		hud = (HUD)GetNode("Camera2D/HUD");
 		Player player = (Player)GetNode("Player");
 		Vector2 PlayerPos = Vector2.Zero;
 		PlayerPos.Y = (int)GetViewportRect().Size.Y - 100;
@@ -19,8 +21,6 @@ public partial class level1 : Node2D
 		MakeFloor();
 
 		ScatterBlocks();
-
-
 	}
 
 	private void SpawnEnemies(Vector2 position)
@@ -30,6 +30,9 @@ public partial class level1 : Node2D
 		if (shouldSpawn)
 		{
 			enemy_wolf wolf = WolfScene.Instantiate<enemy_wolf>();
+			int num = new Random().Next(2);
+			wolf.SetDoPace(num > 0);
+
 			wolf.Position = position;
 			AddChild(wolf);
 		}
@@ -93,4 +96,11 @@ public partial class level1 : Node2D
 	public override void _Process(double delta)
 	{
 	}
+	private void _on_player_player_death(CharacterBody2D player)
+	{
+		hud.ShowMessage("OMG PLAYER has died!" + player.Name);
+		// Replace with function body.
+	}
 }
+
+

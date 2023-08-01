@@ -48,3 +48,5 @@ shape = SubResource("RectangleShape2D_gg81f")
 position = Vector2(1100, 0)
 scale = Vector2(1, 250)
 shape = SubResource("RectangleShape2D_gg81f")
+
+[connection signal="PlayerDeath" from="Player" to="." method="_on_player_player_death"]

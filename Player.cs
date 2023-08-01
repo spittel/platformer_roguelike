@@ -3,6 +3,8 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	[Signal]
+	public delegate void PlayerDeathEventHandler(Player player);
 	public const String NAME = "Player"; // just a place to put this
 	public const String NAME_AREA2D = "player_area2D";
 	private const float FULL_HEALTH = 5;
@@ -148,6 +150,7 @@ public partial class Player : CharacterBody2D
 
 			if (_health == 0)
 			{
+				EmitSignal(SignalName.PlayerDeath, this);
 				QueueFree();
 			}
 		}

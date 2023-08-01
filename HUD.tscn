@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ciugbb6osy2cj"]
+[gd_scene load_steps=3 format=3 uid="uid://ciugbb6osy2cj"]
 
 [ext_resource type="Script" path="res://HUD.cs" id="1_kf7kk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rc6db"]
+line_spacing = 4.0
+font_size = 50
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -11,11 +15,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kf7kk")
 
-[node name="p1health" type="Label" parent="."]
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_left = 437.0
+offset_top = 278.0
+offset_right = 709.0
+offset_bottom = 351.0
+text = "     "
+label_settings = SubResource("LabelSettings_rc6db")
+
+[node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 10.0
-offset_right = 147.0
-offset_bottom = 36.0
-text = "Health:"
-horizontal_alignment = 1
+offset_right = 8.0
+offset_bottom = 8.0
+text = "1 Player"

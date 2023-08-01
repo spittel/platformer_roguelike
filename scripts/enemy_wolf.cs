@@ -23,6 +23,7 @@ public partial class enemy_wolf : CharacterBody2D
 	private Boolean _huntMode = false;
 	private bool _do_shake = false;
 	private double _shake_time = 0;
+	private bool _do_pace = true;
 
 	public override void _Ready()
 	{
@@ -31,6 +32,11 @@ public partial class enemy_wolf : CharacterBody2D
 		_bumpCast = GetNode<RayCast2D>("enemy_wolf_animation/BumpRayCast");
 		_downRay1 = GetNode<RayCast2D>("enemy_wolf_animation/DownRay1");
 		_downRay2 = GetNode<RayCast2D>("enemy_wolf_animation/DownRay2");
+	}
+
+	public void SetDoPace(bool do_pace)
+	{
+		_do_pace = do_pace;
 	}
 
 	public override void _Draw()
@@ -48,54 +54,54 @@ public partial class enemy_wolf : CharacterBody2D
 	}
 
 	public override void _PhysicsProcess(double delta)
-    {
-        Vector2 velocity = Velocity;
+	{
+		Vector2 velocity = Velocity;
 
-        Vector2 direction = Vector2.Right;
+		Vector2 direction = Vector2.Right;
 
-        Shake(delta);
+		Shake(delta);
 
-        CheckHuntMode();
+		CheckHuntMode();
 
-        AdjustSpeed();
+		AdjustSpeed();
 
-        Pace();
+		Pace();
 
-        direction = DecideDirection(direction);
+		direction = DecideDirection(direction);
 
-        velocity = HandleInAir(delta, velocity);
+		velocity = HandleInAir(delta, velocity);
 
-        Velocity = CalculateVelocity(velocity, direction);
+		Velocity = CalculateVelocity(velocity, direction);
 
-        MoveAndSlide();
+		MoveAndSlide();
 
-        QueueRedraw();
-    }
+		QueueRedraw();
+	}
 
-    private void Shake(double delta)
-    {
-        if (_do_shake)
-        {
-            _do_shake = false;
-            _shake_time = 0.5;
-        }
+	private void Shake(double delta)
+	{
+		if (_do_shake)
+		{
+			_do_shake = false;
+			_shake_time = 0.5;
+		}
 
-        if (_shake_time != 0)
-        {
-            Boolean ranBoolean = new Random().Next(0, 100) > 50;
-            if (ranBoolean)
-                Position = new Vector2(Position.X - 2, Position.Y);
-            else
-                Position = new Vector2(Position.X + 2, Position.Y);
+		if (_shake_time != 0)
+		{
+			Boolean ranBoolean = new Random().Next(0, 100) > 50;
+			if (ranBoolean)
+				Position = new Vector2(Position.X - 2, Position.Y);
+			else
+				Position = new Vector2(Position.X + 2, Position.Y);
 
-            _shake_time -= delta;
+			_shake_time -= delta;
 
-            if (_shake_time < 0)
-                _shake_time = 0;
-        }
-    }
+			if (_shake_time < 0)
+				_shake_time = 0;
+		}
+	}
 
-    private Vector2 HandleInAir(double delta, Vector2 velocity)
+	private Vector2 HandleInAir(double delta, Vector2 velocity)
 	{
 		if (!IsOnFloor())
 		{
@@ -112,15 +118,18 @@ public partial class enemy_wolf : CharacterBody2D
 
 	private void Pace()
 	{
-		if (!_downRay1.IsColliding() || !_downRay2.IsColliding() ||
-		 // hitting world wall
-		 _bumpCast.IsColliding())
+		if (_do_pace)
 		{
-			if (!_huntMode)
+			if (!_downRay1.IsColliding() || !_downRay2.IsColliding() ||
+			 // hitting world wall
+			 _bumpCast.IsColliding())
 			{
-				_animatedSprite.FlipH = !_animatedSprite.FlipH;
-				_wolfRayCast.TargetPosition = _wolfRayCast.TargetPosition * new Vector2(-1, 0);
-				_bumpCast.TargetPosition = _bumpCast.TargetPosition * new Vector2(-1, 0);
+				if (!_huntMode)
+				{
+					_animatedSprite.FlipH = !_animatedSprite.FlipH;
+					_wolfRayCast.TargetPosition = _wolfRayCast.TargetPosition * new Vector2(-1, 0);
+					_bumpCast.TargetPosition = _bumpCast.TargetPosition * new Vector2(-1, 0);
+				}
 			}
 		}
 	}
@@ -152,10 +161,18 @@ public partial class enemy_wolf : CharacterBody2D
 
 	private Vector2 DecideDirection(Vector2 direction)
 	{
-		if (!_animatedSprite.FlipH)
-			direction = Vector2.Left;
+		if (_do_pace)
+		{
+			if (!_animatedSprite.FlipH)
+				direction = Vector2.Left;
 
-		return direction;
+			return direction;
+		}
+		else
+		{
+			return Vector2.Zero;
+		}
+
 	}
 
 	private void CheckHuntMode()
@@ -184,6 +201,8 @@ public partial class enemy_wolf : CharacterBody2D
 			}
 		}
 	}
+
+
 }
 
 
